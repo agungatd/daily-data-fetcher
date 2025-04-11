@@ -6,7 +6,7 @@ import sys
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 API_URL = "https://api.nobelprize.org/2.1/nobelPrizes"
-OUTPUT_FILE = "/app/output/nobelPrizes.json" # Path inside the container
+OUTPUT_FILE = "/app/output/nobelPrizes.json"  # Path inside the container
 
 
 def fetch_data(url):

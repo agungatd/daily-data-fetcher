@@ -52,7 +52,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }} # ghcr.io/YOUR_USERNAME/simple-data-pipeline
+          images: ghcr.io/${{ github.repository }} # ghcr.io/YOUR_USERNAME/repo-name
           tags: |
             type=sha # Tag with commit SHA
             type=raw,value=latest,enable={{is_default_branch}} # Tag 'latest' only on default branch (main)
@@ -80,7 +80,8 @@ jobs:
 
       - name: Run the data fetch container
         run: |
-          IMAGE_TAG=ghcr.io/${{ github.repository }}:${{ github.sha }} 
+          # IMAGE_TAG=ghcr.io/${{ github.repository }}:${{ github.sha }} 
+          IMAGE_TAG=ghcr.io/agungatd/daily-data-fetcher:latest
           echo "Running container: $IMAGE_TAG"
           docker pull $IMAGE_TAG
           # Run the container, show logs, remove afterwards
