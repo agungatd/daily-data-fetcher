@@ -58,14 +58,15 @@ def validate_data(filtered_entries, category):
         if missing_keys:
             logging.error(f"Validation Error: Entry {i} (API: {entry.get('category', 'N/A')}) is missing or has empty required keys: {missing_keys}")
             all_entries_valid = False
+
         # Check if the category actually matches (post-filter sanity check)
-        if entry.get('category', {}).get('en','').lower() != category.lower():
+        if entry.get('category', {}).get('en', '').lower() != category.lower():
             logging.error(f"Validation Error: Entry {i} (API: {entry.get('category', 'N/A')}) has wrong category '{entry.get('Category')}' after filtering for '{category}'")
             all_entries_valid = False
 
     if not all_entries_valid:
         logging.error("Critical data quality issues found. Aborting.")
-        sys.exit(1) # Exit if validation fails critically
+        sys.exit(1)  # Exit if validation fails critically
 
     logging.info("Data quality checks passed.")
     return True
