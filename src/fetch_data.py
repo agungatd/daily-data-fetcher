@@ -5,15 +5,48 @@ import sys
 import os
 import time
 
+from prometheus_client import CollectorRegistry, Gauge, Counter, push_to_gateway
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # --- Parameterization ---
 # Get parameters from environment variables with defaults
 TARGET_CATEGORY = os.getenv('API_CATEGORY', 'Physics') 
 OUTPUT_FILENAME = os.getenv('OUTPUT_FILE', f'/app/output/{TARGET_CATEGORY.lower()}_apis.json')
+API_URL = "https://api.nobelprize.org/2.1/nobelPrizes"
+PUSHGATEWAY_URL = os.getenv('PUSHGATEWAY_URL', 'pushgateway:9091') # Internal Docker network address
+# For running locally connecting to localhost:9091
+if os.getenv('RUNNING_LOCALLY') == 'true':
+    PUSHGATEWAY_URL = os.getenv('PUSHGATEWAY_URL', 'localhost:9091') 
 # --- End Parameterization ---
 
-API_URL = "https://api.nobelprize.org/2.1/nobelPrizes"
+# --- Prometheus Metrics Definition ---
+registry = CollectorRegistry() # Use a specific registry for the job
+
+job_last_success_timestamp = Gauge(
+    'data_fetcher_job_last_success_timestamp_seconds',
+    'Timestamp of the last successful completion of the data fetcher job',
+    registry=registry
+)
+records_fetched_total = Counter(
+    'data_fetcher_records_fetched_total',
+    'Total number of raw records fetched from the API by the job',
+    ['category'], # Label to distinguish different runs
+    registry=registry
+)
+records_filtered_total = Counter(
+    'data_fetcher_records_filtered_total',
+    'Total number of records remaining after filtering by the job',
+    ['category'],
+    registry=registry
+)
+job_duration_seconds = Gauge(
+    'data_fetcher_job_duration_seconds',
+    'Duration of the data fetcher job execution in seconds',
+    ['category'],
+    registry=registry
+)
+# --- End Prometheus Metrics Definition ---
 
 
 def fetch_data(url):
@@ -88,16 +121,50 @@ def save_data(data, filename):
         sys.exit(1)  # Exit if saving fails
 
 
+# --- Function to Push Metrics ---
+def push_metrics(duration, raw_count, filtered_count, category):
+    try:
+        # Set metric values
+        job_last_success_timestamp.set_to_current_time()
+        job_duration_seconds.labels(category=category).set(duration)
+        # Counters should ideally reflect totals over time, but for a gauge-like view
+        # of the last run via Pushgateway, setting might be okay for counts too, 
+        # or use Gauges instead. Let's use counters and see how they behave.
+        # Note: Pushgateway keeps the *last* pushed value for a metric+label set.
+        records_fetched_total.labels(category=category).inc(raw_count) # Increment - better for counters
+        records_filtered_total.labels(category=category).inc(filtered_count) # Increment
+
+        # Push metrics to Pushgateway
+        # Grouping key helps distinguish instances if multiple jobs push
+        push_to_gateway(
+            PUSHGATEWAY_URL, 
+            job='data_fetcher_job', 
+            registry=registry,
+            grouping_key={'instance': f'data_fetcher_{category.lower()}'} 
+        )
+        logging.info(f"Successfully pushed metrics to Pushgateway at {PUSHGATEWAY_URL}")
+    except Exception as e:
+        logging.error(f"Error pushing metrics to Pushgateway: {e}")
+        # Decide if this failure should stop the job (e.g., sys.exit(1))
+        # For now, just log the error.
+# --- End Function to Push Metrics ---
+
+
 if __name__ == "__main__":
     start_time = time.time()
     logging.info("="*30)
     logging.info("Starting data fetching process...")
     logging.info(f"Parameter - Target Category: {TARGET_CATEGORY}")
     logging.info(f"Parameter - Output File: {OUTPUT_FILENAME}")
+    logging.info(f"Parameter - Pushgateway URL: {PUSHGATEWAY_URL}")
 
     raw_data = fetch_data(API_URL)
+    raw_entry_count = 0
+    filtered_data = []
 
     if raw_data:
+        raw_entry_count = raw_data.get('count', 0)
+
         # Pass TARGET_CATEGORY to filter_entries
         filtered_data = filter_category(raw_data, category=TARGET_CATEGORY) 
 
@@ -128,6 +195,14 @@ if __name__ == "__main__":
     logging.info(f"Monitoring - Records Filtered ({TARGET_CATEGORY}): {len(filtered_data)}")
     logging.info(f"Monitoring - Processing Time: {processing_time:.4f} seconds")
     # --- End Monitoring via Logging ---
+
+    # --- Push Metrics at the end ---
+    push_metrics(
+        duration=processing_time,
+        raw_count=raw_entry_count,
+        filtered_count=len(filtered_data),
+        category=TARGET_CATEGORY
+    )
 
     logging.info("Data fetching process completed successfully.")
     logging.info("="*30)
