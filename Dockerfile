@@ -16,6 +16,11 @@ COPY tests/ ./tests
 # Note: We don't strictly need tests in the final image, but including them 
 # allows running tests inside the container image if needed later.
 
+# --- Add ENV for Parameterization Defaults ---
+ENV API_CATEGORY="Chemistry"
+ENV OUTPUT_FILE="/app/output/nobelPrizes${API_CATEGORY}_apis.json"
+# --- End ENV ---
+
 # Create output directory within the container
 RUN mkdir /app/output 
 

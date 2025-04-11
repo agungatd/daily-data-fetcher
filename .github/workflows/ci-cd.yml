@@ -111,12 +111,20 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run the data fetch container
-        run: |
+        env:
+          # Define environment variables for the 'run' step itself
           # IMAGE_TAG=ghcr.io/${{ github.repository }}:${{ github.sha }} 
-          IMAGE_TAG=ghcr.io/agungatd/daily-data-fetcher:latest
+          IMAGE_TAG: ghcr.io/agungatd/daily-data-fetcher:latest
+          # --- Example Override ---
+          DESIRED_CATEGORY: "Chemistry" 
+        run: |
           echo "Running container: $IMAGE_TAG"
           docker pull $IMAGE_TAG
           # Run the container, show logs, remove afterwards
-          docker run --rm $IMAGE_TAG 
+          echo "Running job for category: $DESIRED_CATEGORY"
+          docker run --rm \
+            -e API_CATEGORY="$DESIRED_CATEGORY" \
+            -e OUTPUT_FILE="/app/output/nobelPrizesChemistry.json" \
+            $IMAGE_TAG 
           echo "Container run finished."
           # Note: Output file is inside the container, not visible here unless mounted
