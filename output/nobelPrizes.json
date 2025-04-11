@@ -1,0 +1,251 @@
+{
+    "category_filter": "Chemistry",
+    "count": 5,
+    "nobelPrizes": [
+        {
+            "awardYear": "1901",
+            "category": {
+                "en": "Chemistry",
+                "no": "Kjemi",
+                "se": "Kemi"
+            },
+            "categoryFullName": {
+                "en": "The Nobel Prize in Chemistry",
+                "no": "Nobelprisen i kjemi",
+                "se": "Nobelpriset i kemi"
+            },
+            "dateAwarded": "1901-11-12",
+            "prizeAmount": 150782,
+            "prizeAmountAdjusted": 9704878,
+            "links": [
+                {
+                    "rel": "nobelPrize",
+                    "href": "https://api.nobelprize.org/2/nobelPrize/che/1901",
+                    "action": "GET",
+                    "types": "application/json"
+                }
+            ],
+            "laureates": [
+                {
+                    "id": "160",
+                    "knownName": {
+                        "en": "Jacobus H. van 't Hoff"
+                    },
+                    "fullName": {
+                        "en": "Jacobus Henricus van 't Hoff"
+                    },
+                    "portion": "1",
+                    "sortOrder": "1",
+                    "motivation": {
+                        "en": "in recognition of the extraordinary services he has rendered by the discovery of the laws of chemical dynamics and osmotic pressure in solutions",
+                        "se": "s\u00e5som ett erk\u00e4nnande av den utomordentliga f\u00f6rtj\u00e4nst han inlagt genom uppt\u00e4ckten av lagarna f\u00f6r den kemiska dynamiken och f\u00f6r det osmotiska trycket i l\u00f6sningar"
+                    },
+                    "links": [
+                        {
+                            "rel": "laureate",
+                            "href": "https://api.nobelprize.org/2/laureate/160",
+                            "action": "GET",
+                            "types": "application/json"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "awardYear": "1902",
+            "category": {
+                "en": "Chemistry",
+                "no": "Kjemi",
+                "se": "Kemi"
+            },
+            "categoryFullName": {
+                "en": "The Nobel Prize in Chemistry",
+                "no": "Nobelprisen i kjemi",
+                "se": "Nobelpriset i kemi"
+            },
+            "dateAwarded": "1902-11-11",
+            "prizeAmount": 141847,
+            "prizeAmountAdjusted": 9129789,
+            "links": [
+                {
+                    "rel": "nobelPrize",
+                    "href": "https://api.nobelprize.org/2/nobelPrize/che/1902",
+                    "action": "GET",
+                    "types": "application/json"
+                }
+            ],
+            "laureates": [
+                {
+                    "id": "161",
+                    "knownName": {
+                        "en": "Emil Fischer"
+                    },
+                    "fullName": {
+                        "en": "Hermann Emil Fischer"
+                    },
+                    "portion": "1",
+                    "sortOrder": "1",
+                    "motivation": {
+                        "en": "in recognition of the extraordinary services he has rendered by his work on sugar and purine syntheses",
+                        "se": "s\u00e5som ett erk\u00e4nnande av den utomordentliga f\u00f6rtj\u00e4nst han inlagt genom sina syntetiska arbeten inom socker - och purin-grupperna"
+                    },
+                    "links": [
+                        {
+                            "rel": "laureate",
+                            "href": "https://api.nobelprize.org/2/laureate/161",
+                            "action": "GET",
+                            "types": "application/json"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "awardYear": "1903",
+            "category": {
+                "en": "Chemistry",
+                "no": "Kjemi",
+                "se": "Kemi"
+            },
+            "categoryFullName": {
+                "en": "The Nobel Prize in Chemistry",
+                "no": "Nobelprisen i kjemi",
+                "se": "Nobelpriset i kemi"
+            },
+            "dateAwarded": "1903-11-12",
+            "prizeAmount": 141358,
+            "prizeAmountAdjusted": 8830717,
+            "links": [
+                {
+                    "rel": "nobelPrize",
+                    "href": "https://api.nobelprize.org/2/nobelPrize/che/1903",
+                    "action": "GET",
+                    "types": "application/json"
+                }
+            ],
+            "laureates": [
+                {
+                    "id": "162",
+                    "knownName": {
+                        "en": "Svante Arrhenius"
+                    },
+                    "fullName": {
+                        "en": "Svante August Arrhenius"
+                    },
+                    "portion": "1",
+                    "sortOrder": "1",
+                    "motivation": {
+                        "en": "in recognition of the extraordinary services he has rendered to the advancement of chemistry by his electrolytic theory of dissociation",
+                        "se": "s\u00e5som ett erk\u00e4nnande f\u00f6r den utomordentliga f\u00f6rtj\u00e4nst han genom sin elektrolytiska dissociations-teori inlagt om kemiens utveckling"
+                    },
+                    "links": [
+                        {
+                            "rel": "laureate",
+                            "href": "https://api.nobelprize.org/2/laureate/162",
+                            "action": "GET",
+                            "types": "application/json"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "awardYear": "1904",
+            "category": {
+                "en": "Chemistry",
+                "no": "Kjemi",
+                "se": "Kemi"
+            },
+            "categoryFullName": {
+                "en": "The Nobel Prize in Chemistry",
+                "no": "Nobelprisen i kjemi",
+                "se": "Nobelpriset i kemi"
+            },
+            "dateAwarded": "1904-11-08",
+            "prizeAmount": 140859,
+            "prizeAmountAdjusted": 8799545,
+            "links": [
+                {
+                    "rel": "nobelPrize",
+                    "href": "https://api.nobelprize.org/2/nobelPrize/che/1904",
+                    "action": "GET",
+                    "types": "application/json"
+                }
+            ],
+            "laureates": [
+                {
+                    "id": "163",
+                    "knownName": {
+                        "en": "Sir William Ramsay"
+                    },
+                    "fullName": {
+                        "en": "Sir William Ramsay"
+                    },
+                    "portion": "1",
+                    "sortOrder": "1",
+                    "motivation": {
+                        "en": "in recognition of his services in the discovery of the inert gaseous elements in air, and his determination of their place in the periodic system",
+                        "se": "s\u00e5som ett erk\u00e4nnande av den f\u00f6rtj\u00e4nst han inlagt genom uppt\u00e4ckten av de indifferenta gasformiga grund\u00e4mnenena i luften och best\u00e4mmandet av deras plats i det periodiska systemet"
+                    },
+                    "links": [
+                        {
+                            "rel": "laureate",
+                            "href": "https://api.nobelprize.org/2/laureate/163",
+                            "action": "GET",
+                            "types": "application/json"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "awardYear": "1905",
+            "category": {
+                "en": "Chemistry",
+                "no": "Kjemi",
+                "se": "Kemi"
+            },
+            "categoryFullName": {
+                "en": "The Nobel Prize in Chemistry",
+                "no": "Nobelprisen i kjemi",
+                "se": "Nobelpriset i kemi"
+            },
+            "dateAwarded": "1905-11-09",
+            "prizeAmount": 138089,
+            "prizeAmountAdjusted": 8626501,
+            "links": [
+                {
+                    "rel": "nobelPrize",
+                    "href": "https://api.nobelprize.org/2/nobelPrize/che/1905",
+                    "action": "GET",
+                    "types": "application/json"
+                }
+            ],
+            "laureates": [
+                {
+                    "id": "164",
+                    "knownName": {
+                        "en": "Adolf von Baeyer"
+                    },
+                    "fullName": {
+                        "en": "Johann Friedrich Wilhelm Adolf von Baeyer"
+                    },
+                    "portion": "1",
+                    "sortOrder": "1",
+                    "motivation": {
+                        "en": "in recognition of his services in the advancement of organic chemistry and the chemical industry, through his work on organic dyes and hydroaromatic compounds",
+                        "se": "s\u00e5som ett erk\u00e4nnande av den f\u00f6rtj\u00e4nst han inlagt om den organiska kemiens och den kemiska industriens utveckling genom sina arbeten r\u00f6rande organiska f\u00e4rg\u00e4mnen och hydroaromatiska f\u00f6reningar"
+                    },
+                    "links": [
+                        {
+                            "rel": "laureate",
+                            "href": "https://api.nobelprize.org/2/laureate/164",
+                            "action": "GET",
+                            "types": "application/json"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
