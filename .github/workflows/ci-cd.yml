@@ -65,11 +65,43 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+  provision_infra:
+    name: Provision Infrastructure (Local)
+    runs-on: ubuntu-latest
+    needs: build_push_image # Ensure image is ready before potentially provisioning infra that uses it
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        # with:
+        #   terraform_version: "1.0.0" # Specify version if needed
+
+      - name: Terraform Init
+        run: terraform init
+        # Add cloud provider credentials here if using AWS/GCP/Azure
+        # env:
+        #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
+        # Add -out=tfplan for review steps in more complex setups
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        # Be cautious with -auto-approve in production!
+        # Usually requires a manual approval step.
+
   # Simple "Deployment" - Run the container in Actions
   run_job:
     name: Run Data Fetch Job
     runs-on: ubuntu-latest
-    needs: build_push_image # Run only after image is built and pushed
+    needs: [build_push_image, provision_infra]
     steps:
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
