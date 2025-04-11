@@ -48,24 +48,24 @@ def validate_data(filtered_entries, category):
     if not filtered_entries:
         logging.warning(f"Validation check: No entries found after filtering for category '{category}'. Processing continues, but check filter or source.")
         # Depending on requirements, you might exit here:
-        # sys.exit(1) 
-        return True # Allow processing empty results for now
+        # sys.exit(1)
+        return True  # Allow processing empty results for now
 
-    required_keys = ['API', 'Description', 'Link', 'Category']
+    required_keys = ['awardYear', 'category', 'categoryFullName', 'dateAwarded', 'prizeAmount', 'prizeAmountAdjusted', 'links', 'laureates']
     all_entries_valid = True
     for i, entry in enumerate(filtered_entries):
         missing_keys = [key for key in required_keys if key not in entry or not entry[key]]
         if missing_keys:
-            logging.error(f"Validation Error: Entry {i} (API: {entry.get('API', 'N/A')}) is missing or has empty required keys: {missing_keys}")
+            logging.error(f"Validation Error: Entry {i} (API: {entry.get('category', 'N/A')}) is missing or has empty required keys: {missing_keys}")
             all_entries_valid = False
         # Check if the category actually matches (post-filter sanity check)
-        if entry.get('Category', '').lower() != category.lower():
-             logging.error(f"Validation Error: Entry {i} (API: {entry.get('API', 'N/A')}) has wrong category '{entry.get('Category')}' after filtering for '{category}'")
-             all_entries_valid = False
+        if entry.get('category', {}).get('en','').lower() != category.lower():
+            logging.error(f"Validation Error: Entry {i} (API: {entry.get('category', 'N/A')}) has wrong category '{entry.get('Category')}' after filtering for '{category}'")
+            all_entries_valid = False
 
     if not all_entries_valid:
-         logging.error("Critical data quality issues found. Aborting.")
-         sys.exit(1) # Exit if validation fails critically
+        logging.error("Critical data quality issues found. Aborting.")
+        sys.exit(1) # Exit if validation fails critically
 
     logging.info("Data quality checks passed.")
     return True
@@ -84,10 +84,11 @@ def save_data(data, filename):
         logging.info(f"Successfully saved data to {filename}")
     except IOError as e:
         logging.error(f"Error saving data to {filename}: {e}")
-        sys.exit(1) # Exit if saving fails
+        sys.exit(1)  # Exit if saving fails
+
 
 if __name__ == "__main__":
-    start_time = time.time() # <-- For monitoring
+    start_time = time.time()
     logging.info("="*30)
     logging.info("Starting data fetching process...")
     logging.info(f"Parameter - Target Category: {TARGET_CATEGORY}")
@@ -97,7 +98,7 @@ if __name__ == "__main__":
 
     if raw_data:
         # Pass TARGET_CATEGORY to filter_entries
-        filtered_data = filter_entries(raw_data, category=TARGET_CATEGORY) 
+        filtered_data = filter_category(raw_data, category=TARGET_CATEGORY) 
 
         # --- Run Data Quality Checks ---
         validate_data(filtered_data, category=TARGET_CATEGORY)
